@@ -9,7 +9,7 @@ const Footer = () => {
             <div className="flex items-center gap-3 mb-4">
               <img src={logo} alt="Little Bloom Logo" className="h-12 w-12 object-contain" />
               <span className="font-display text-xl font-bold">
-                Little Bloom
+                Little Bunny's
               </span>
             </div>
             <p className="text-primary-foreground/70 text-sm leading-relaxed">

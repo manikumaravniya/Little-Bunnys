@@ -7,7 +7,7 @@ const Header = () => {
         <div className="flex items-center gap-3">
           <img src={logo} alt="Little Bloom Logo" className="h-14 w-14 object-contain" />
           <span className="font-display text-2xl font-bold text-foreground">
-            Little <span className="text-primary">Bloom</span>
+            Little <span className="text-primary">Bunny's</span>
           </span>
         </div>
         

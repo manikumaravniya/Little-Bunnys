@@ -2,7 +2,7 @@ import heroGirl from "@/assets/hero-girl.jpg";
 
 const Hero = () => {
   return (
-    <section className="relative overflow-hidden py-20 md:py-32">
+    <section className="relative overflow-hidden pt-6 pb-16 md:pt-10 md:pb-28">
       {/* Background decorations */}
       <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-coral-light/40 blur-3xl" />
       <div className="absolute bottom-20 right-10 w-40 h-40 rounded-full bg-mint-light/50 blur-3xl" />
@@ -36,12 +36,12 @@ const Hero = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </a>
-              <a 
+              {/* <a 
                 href="#about" 
                 className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-secondary text-secondary-foreground font-semibold hover:bg-secondary/80 transition-all duration-300 btn-bounce"
               >
                 Learn More
-              </a>
+              </a> */}
             </div>
           </div>
           
