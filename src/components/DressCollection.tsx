@@ -14,56 +14,64 @@ const dresses = [
     code: "LB-001",
     name: "Sunset Orange Tie-Dye Dress",
     description: "Bright orange tie-dye dress with a soft flared skirt and cute button detailing on the bodice. Light, comfortable, and perfect for everyday wear or casual outings.",
-    category: "Casual Wear"
+    category: "Casual Wear",
+    // price: "$32"
   },
   {
     image: dress2,
     code: "LB-002",
     name: "Maroon Royal Brocade Party Dress",
     description: "Elegant maroon satin bodice paired with a rich gold-woven brocade flared skirt. A timeless festive dress ideal for weddings, celebrations, and special occasions.",
-    category: "Festive Wear"
+    category: "Festive Wear",
+    // price: "$58"
   },
   {
     image: dress3,
     code: "LB-003",
     name: "Royal Pink Peplum Ethnic Dress",
     description: "Bright pink embroidered peplum top paired with a flared navy brocade skirt and elegant border. A graceful festive outfit perfect for celebrations and special occasions.",
-    category: "Festive Wear "
+    category: "Festive Wear ",
+    // price: "$55"
   },
   {
     image: dress4,
     code: "LB-004",
     name: "Ruby Blossom Ethnic Peplum Dress",
     description: "Rich red embroidered peplum top paired with a flared grey skirt featuring a vibrant pink festive border. Elegant and traditional, perfect for weddings, festivals, and special celebrations.",
-    category: "Festive Wear"
+    category: "Festive Wear",
+    // price: "$60"
   },
   {
     image: dress5,
     code: "LB-005",
     name: "Emerald Festive Bloom",
     description: "Rich green embroidered bodice paired with a flared red brocade skirt. Elegant and festive, perfect for weddings and special occasions.",
-    category: "Ethnic Wear"
+    category: "Ethnic Wear",
+    // price: "$49"
   },
   {
     image: dress6,
     code: "LB-006",
     name: "Regal Maroon & Green Brocade Dress",
     description: "Elegant maroon embroidered bodice paired with a rich green brocade flared skirt and traditional border. A classic festive outfit perfect for weddings and special occasions.",
-    category: "Ethnic Wear"
+    category: "Ethnic Wear",
+    // price: "$62"
   },
   {
     image: dress7,
     code: "LB-007",
     name: "Amber Leaf Organza Party Dress",
     description: "Warm amber-toned bodice paired with a flowy printed organza flared skirt. Light, elegant, and perfect for parties and special occasions.",
-    category: "Party Wear"
+    category: "Party Wear",
+    // price: "$45"
   },
   {
     image: dress8,
     code: "LB-008",
     name: "Pink Bunny Wrap Cotton Dress",
     description: "Soft pink cotton dress with cute bunny prints, wrap-style bodice, and tassel tie-up detail. Comfortable, breathable, and perfect for everyday wear.",
-    category: "Casual Wear"
+    category: "Casual Wear",
+    // price: "$29"
   }
 ];
 

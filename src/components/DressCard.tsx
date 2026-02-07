@@ -4,9 +4,10 @@ interface DressCardProps {
   name: string;
   description: string;
   category: string;
+  price: string;
 }
 
-const DressCard = ({ image, code, name, description, category }: DressCardProps) => {
+const DressCard = ({ image, code, name, description, category, price }: DressCardProps) => {
   return (
     <div className="group bg-card rounded-2xl overflow-hidden shadow-card card-hover">
       <div className="relative aspect-[4/5] overflow-hidden bg-muted">
@@ -28,9 +29,14 @@ const DressCard = ({ image, code, name, description, category }: DressCardProps)
       </div>
       
       <div className="p-5">
-        <h3 className="font-display text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
-          {name}
-        </h3>
+        <div className="flex items-start justify-between gap-3 mb-2">
+          <h3 className="font-display text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
+            {name}
+          </h3>
+          <span className="text-sm font-semibold text-primary whitespace-nowrap">
+            {price}
+          </span>
+        </div>
         <p className="text-muted-foreground text-sm leading-relaxed">
           {description}
         </p>
