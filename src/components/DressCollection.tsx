@@ -12,58 +12,58 @@ const dresses = [
   {
     image: dress1,
     code: "LB-001",
-    name: "Rose Garden Dress",
-    description: "A delightful pink floral dress with flutter sleeves, perfect for sunny days and garden parties.",
-    category: "Summer"
+    name: "Sunset Orange Tie-Dye Dress",
+    description: "Bright orange tie-dye dress with a soft flared skirt and cute button detailing on the bodice. Light, comfortable, and perfect for everyday wear or casual outings.",
+    category: "Casual Wear"
   },
   {
     image: dress2,
     code: "LB-002",
-    name: "Mint Polka Dream",
-    description: "Fresh mint green cotton dress with playful white polka dots. Comfortable and breathable for everyday wear.",
-    category: "Casual"
+    name: "Maroon Royal Brocade Party Dress",
+    description: "Elegant maroon satin bodice paired with a rich gold-woven brocade flared skirt. A timeless festive dress ideal for weddings, celebrations, and special occasions.",
+    category: "Festive Wear"
   },
   {
     image: dress3,
     code: "LB-003",
-    name: "Lavender Princess",
-    description: "Elegant lavender tulle party dress with satin bow. Perfect for special occasions and celebrations.",
-    category: "Party"
+    name: "Royal Pink Peplum Ethnic Dress",
+    description: "Bright pink embroidered peplum top paired with a flared navy brocade skirt and elegant border. A graceful festive outfit perfect for celebrations and special occasions.",
+    category: "Festive Wear "
   },
   {
     image: dress4,
     code: "LB-004",
-    name: "Coral Sunshine",
-    description: "Adorable coral dress with bow details and ruffled hem. A cheerful choice for your little one.",
-    category: "Casual"
+    name: "Ruby Blossom Ethnic Peplum Dress",
+    description: "Rich red embroidered peplum top paired with a flared grey skirt featuring a vibrant pink festive border. Elegant and traditional, perfect for weddings, festivals, and special celebrations.",
+    category: "Festive Wear"
   },
   {
     image: dress5,
     code: "LB-005",
-    name: "Ivory Lace Angel",
-    description: "Exquisite white lace dress with delicate embroidery. Ideal for flower girls and formal events.",
-    category: "Formal"
+    name: "Emerald Festive Bloom",
+    description: "Rich green embroidered bodice paired with a flared red brocade skirt. Elegant and festive, perfect for weddings and special occasions.",
+    category: "Ethnic Wear"
   },
   {
     image: dress6,
     code: "LB-006",
-    name: "Sunflower Joy",
-    description: "Bright and cheerful sunflower print dress that captures the essence of summer happiness.",
-    category: "Summer"
+    name: "Regal Maroon & Green Brocade Dress",
+    description: "Elegant maroon embroidered bodice paired with a rich green brocade flared skirt and traditional border. A classic festive outfit perfect for weddings and special occasions.",
+    category: "Ethnic Wear"
   },
   {
     image: dress7,
     code: "LB-007",
-    name: "Sage Meadow",
-    description: "Soft sage dress with a gentle drape and airy feel, made for breezy afternoons.",
-    category: "Casual"
+    name: "Amber Leaf Organza Party Dress",
+    description: "Warm amber-toned bodice paired with a flowy printed organza flared skirt. Light, elegant, and perfect for parties and special occasions.",
+    category: "Party Wear"
   },
   {
     image: dress8,
     code: "LB-008",
-    name: "Pearl Petal",
-    description: "Classic lace silhouette with a subtle shimmer, designed for picture-perfect moments.",
-    category: "Formal"
+    name: "Pink Bunny Wrap Cotton Dress",
+    description: "Soft pink cotton dress with cute bunny prints, wrap-style bodice, and tassel tie-up detail. Comfortable, breathable, and perfect for everyday wear.",
+    category: "Casual Wear"
   }
 ];
 
