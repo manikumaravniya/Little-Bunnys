@@ -1,16 +1,8 @@
 import DressCard from "./DressCard";
-import dress1 from "@/assets/dress-1.jpg";
-import dress2 from "@/assets/dress-2.jpg";
-import dress3 from "@/assets/dress-3.jpg";
-import dress4 from "@/assets/dress-4.jpg";
-import dress5 from "@/assets/dress-5.jpg";
-import dress6 from "@/assets/dress-6.jpg";
-import dress7 from "@/assets/dress-7.jpg";
-import dress8 from "@/assets/dress-8.jpg";
 
 const dresses = [
   {
-    image: dress1,
+    image: "https://res.cloudinary.com/dlbjaesa9/image/upload/v1770624347/dress-1_ohz1j4.png",
     code: "LB-001",
     name: "Sunset Orange Tie-Dye Dress",
     description: "Bright orange tie-dye dress with a soft flared skirt and cute button detailing on the bodice. Light, comfortable, and perfect for everyday wear or casual outings.",
@@ -18,7 +10,7 @@ const dresses = [
     // price: "$32"
   },
   {
-    image: dress2,
+    image: "https://res.cloudinary.com/dlbjaesa9/image/upload/v1770624345/dress-2_wnlijh.png",
     code: "LB-002",
     name: "Maroon Royal Brocade Party Dress",
     description: "Elegant maroon satin bodice paired with a rich gold-woven brocade flared skirt. A timeless festive dress ideal for weddings, celebrations, and special occasions.",
@@ -26,7 +18,7 @@ const dresses = [
     // price: "$58"
   },
   {
-    image: dress3,
+    image: "https://res.cloudinary.com/dlbjaesa9/image/upload/v1770624346/dress-3_mfaiqp.png",
     code: "LB-003",
     name: "Royal Pink Peplum Ethnic Dress",
     description: "Bright pink embroidered peplum top paired with a flared navy brocade skirt and elegant border. A graceful festive outfit perfect for celebrations and special occasions.",
@@ -34,7 +26,7 @@ const dresses = [
     // price: "$55"
   },
   {
-    image: dress4,
+    image: "https://res.cloudinary.com/dlbjaesa9/image/upload/v1770624367/dress-4_qq6xra.png",
     code: "LB-004",
     name: "Ruby Blossom Ethnic Peplum Dress",
     description: "Rich red embroidered peplum top paired with a flared grey skirt featuring a vibrant pink festive border. Elegant and traditional, perfect for weddings, festivals, and special celebrations.",
@@ -42,7 +34,7 @@ const dresses = [
     // price: "$60"
   },
   {
-    image: dress5,
+    image: "https://res.cloudinary.com/dlbjaesa9/image/upload/v1770624360/dress-5_fctggx.png",
     code: "LB-005",
     name: "Emerald Festive Bloom",
     description: "Rich green embroidered bodice paired with a flared red brocade skirt. Elegant and festive, perfect for weddings and special occasions.",
@@ -50,7 +42,7 @@ const dresses = [
     // price: "$49"
   },
   {
-    image: dress6,
+    image: "https://res.cloudinary.com/dlbjaesa9/image/upload/v1770624364/dress-6_h0c9r1.png",
     code: "LB-006",
     name: "Regal Maroon & Green Brocade Dress",
     description: "Elegant maroon embroidered bodice paired with a rich green brocade flared skirt and traditional border. A classic festive outfit perfect for weddings and special occasions.",
@@ -58,7 +50,7 @@ const dresses = [
     // price: "$62"
   },
   {
-    image: dress7,
+    image: "https://res.cloudinary.com/dlbjaesa9/image/upload/v1770624354/dress-7_pgtoyw.png",
     code: "LB-007",
     name: "Amber Leaf Organza Party Dress",
     description: "Warm amber-toned bodice paired with a flowy printed organza flared skirt. Light, elegant, and perfect for parties and special occasions.",
@@ -66,7 +58,7 @@ const dresses = [
     // price: "$45"
   },
   {
-    image: dress8,
+    image: "https://res.cloudinary.com/dlbjaesa9/image/upload/v1770624358/dress-8_yic4ql.png",
     code: "LB-008",
     name: "Pink Bunny Wrap Cotton Dress",
     description: "Soft pink cotton dress with cute bunny prints, wrap-style bodice, and tassel tie-up detail. Comfortable, breathable, and perfect for everyday wear.",
