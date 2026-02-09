@@ -1,6 +1,61 @@
+import { useEffect, useState } from "react";
 import heroGirl from "@/assets/hero-girl.jpg";
+import girlDress from "@/assets/GirlDress.png";
+import girlDress2 from "@/assets/GirlDress2.png";
+import girlDress3 from "@/assets/GirlDress3.png";
+import OrderWhatsAppDialog from "@/components/OrderWhatsAppDialog";
 
 const Hero = () => {
+  const slides = [
+    {
+      src: heroGirl,
+      alt: "Little girl smiling in a beautiful dress",
+      type: "image" as const,
+    },
+    {
+      src: girlDress,
+      alt: "Girl in festive dress",
+      type: "image" as const,
+    },
+    {
+      src: girlDress2,
+      alt: "Girl in another festive dress",
+      type: "image" as const,
+    },
+    {
+      src: girlDress3,
+      alt: "Dress showcase",
+      type: "image" as const,
+    },
+    // {
+    //   src: "https://res.cloudinary.com/dlbjaesa9/video/upload/v1770637461/Generating_Festive_Indian_Girl_Video_mk6dfx.mp4",
+    //   alt: "Festive video",
+    //   type: "video" as const,
+    // },
+  ];
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setActiveIndex((prev) => prev + 1);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [slides.length]);
+
+  useEffect(() => {
+    if (activeIndex !== slides.length) return;
+
+    const timeout = window.setTimeout(() => {
+      setIsAnimating(false);
+      setActiveIndex(0);
+    }, 700);
+
+    return () => window.clearTimeout(timeout);
+  }, [activeIndex, slides.length]);
+
   return (
     <section className="relative overflow-hidden pt-6 pb-16 md:pt-10 md:pb-28">
       {/* Background decorations */}
@@ -36,6 +91,11 @@ const Hero = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </a>
+              <OrderWhatsAppDialog
+                triggerLabel="Order via WhatsApp"
+                triggerVariant="secondary"
+                triggerClassName="rounded-full px-8 py-4 font-semibold shadow-hover hover:shadow-lg transition-all duration-300 btn-bounce"
+              />
               {/* <a 
                 href="#about" 
                 className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-secondary text-secondary-foreground font-semibold hover:bg-secondary/80 transition-all duration-300 btn-bounce"
@@ -51,11 +111,49 @@ const Hero = () => {
               {/* Decorative frame */}
               <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 rounded-3xl blur-2xl" />
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50">
-                <img 
-                  src={heroGirl} 
-                  alt="Little girl smiling in a beautiful dress" 
-                  className="w-full h-auto max-w-md mx-auto object-cover"
-                />
+                <div
+                  className={`flex w-full ${isAnimating ? "transition-transform duration-700 ease-in-out" : ""}`}
+                  style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+                >
+                  {slides.map((slide) => (
+                    <div key={slide.src} className="min-w-full">
+                      {slide.type === "video" ? (
+                        <video
+                          className="w-full h-auto max-w-md mx-auto object-cover"
+                          src={slide.src}
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                        />
+                      ) : (
+                        <img
+                          src={slide.src}
+                          alt={slide.alt}
+                          className="w-full h-auto max-w-md mx-auto object-cover"
+                        />
+                      )}
+                    </div>
+                  ))}
+                  <div className="min-w-full">
+                    {slides[0].type === "video" ? (
+                      <video
+                        className="w-full h-auto max-w-md mx-auto object-cover"
+                        src={slides[0].src}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      />
+                    ) : (
+                      <img
+                        src={slides[0].src}
+                        alt={slides[0].alt}
+                        className="w-full h-auto max-w-md mx-auto object-cover"
+                      />
+                    )}
+                  </div>
+                </div>
               </div>
               {/* Floating decorations */}
               <div className="absolute -top-4 -right-4 w-16 h-16 bg-primary/30 rounded-full blur-xl animate-pulse" />
