@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { addToCart } from "@/lib/cart";
+import { addToCart, getCartItems, removeFromCart, updateCartQuantity } from "@/lib/cart";
 
 interface DressCardProps {
   image: string;
@@ -11,8 +12,31 @@ interface DressCardProps {
 }
 
 const DressCard = ({ image, code, name, description, category, price }: DressCardProps) => {
+  const [quantity, setQuantity] = useState(0);
+
+  const syncQuantity = () => {
+    const item = getCartItems().find((entry) => entry.code === code);
+    setQuantity(item?.quantity || 0);
+  };
+
+  useEffect(() => {
+    syncQuantity();
+    const handler = () => syncQuantity();
+    window.addEventListener("lb-cart-change", handler);
+    return () => window.removeEventListener("lb-cart-change", handler);
+  }, [code]);
+
   const handleAdd = () => {
     addToCart({ code, name, image });
+  };
+
+  const handleRemove = () => {
+    if (quantity <= 1) {
+      removeFromCart(code);
+      return;
+    }
+
+    updateCartQuantity(code, quantity - 1);
   };
 
   return (
@@ -47,9 +71,14 @@ const DressCard = ({ image, code, name, description, category, price }: DressCar
         <p className="text-muted-foreground text-sm leading-relaxed">
           {description}
         </p>
-        <div className="mt-4">
-          <Button className="w-full" onClick={handleAdd}>
-            Add to cart
+        <div className="mt-4 flex items-center gap-2">
+          {quantity > 0 && (
+            <Button variant="outline" onClick={handleRemove}>
+              -
+            </Button>
+          )}
+          <Button className="flex-1" onClick={handleAdd}>
+            {quantity > 0 ? `Added to cart (${quantity})` : "Add to cart"}
           </Button>
         </div>
       </div>

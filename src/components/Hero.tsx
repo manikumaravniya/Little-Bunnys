@@ -27,11 +27,11 @@ const Hero = () => {
       alt: "Dress showcase",
       type: "image" as const,
     },
-    // {
-    //   src: "https://res.cloudinary.com/dlbjaesa9/video/upload/v1770637461/Generating_Festive_Indian_Girl_Video_mk6dfx.mp4",
-    //   alt: "Festive video",
-    //   type: "video" as const,
-    // },
+    {
+      src: "https://res.cloudinary.com/dlbjaesa9/video/upload/v1770637461/Generating_Festive_Indian_Girl_Video_mk6dfx.mp4",
+      alt: "Festive video",
+      type: "video" as const,
+    },
   ];
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(true);

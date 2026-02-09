@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import OrderWhatsAppDialog from "@/components/OrderWhatsAppDialog";
 import { CartItem, getCartItems, removeFromCart, updateCartQuantity } from "@/lib/cart";
 
@@ -65,15 +64,27 @@ const CartPage = () => {
                 </div>
                 <div className="flex flex-1 flex-wrap items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
-                    <Input
-                      type="number"
-                      min={1}
-                      className="w-20"
-                      value={item.quantity}
-                      onChange={(event) =>
-                        updateCartQuantity(item.code, Number(event.target.value))
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() =>
+                        updateCartQuantity(item.code, Math.max(1, item.quantity - 1))
                       }
-                    />
+                    >
+                      -
+                    </Button>
+                    <span className="min-w-[2rem] text-center text-sm font-semibold text-foreground">
+                      {item.quantity}
+                    </span>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => updateCartQuantity(item.code, item.quantity + 1)}
+                    >
+                      +
+                    </Button>
                     <span className="text-xs text-muted-foreground">Qty</span>
                   </div>
                   <Button variant="outline" onClick={() => removeFromCart(item.code)}>
