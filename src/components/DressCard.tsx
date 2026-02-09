@@ -1,3 +1,6 @@
+import { Button } from "@/components/ui/button";
+import { addToCart } from "@/lib/cart";
+
 interface DressCardProps {
   image: string;
   code: string;
@@ -8,6 +11,10 @@ interface DressCardProps {
 }
 
 const DressCard = ({ image, code, name, description, category, price }: DressCardProps) => {
+  const handleAdd = () => {
+    addToCart({ code, name, image });
+  };
+
   return (
     <div className="group bg-card rounded-2xl overflow-hidden shadow-card card-hover">
       <div className="relative aspect-[4/5] overflow-hidden bg-muted">
@@ -40,6 +47,11 @@ const DressCard = ({ image, code, name, description, category, price }: DressCar
         <p className="text-muted-foreground text-sm leading-relaxed">
           {description}
         </p>
+        <div className="mt-4">
+          <Button className="w-full" onClick={handleAdd}>
+            Add to cart
+          </Button>
+        </div>
       </div>
     </div>
   );

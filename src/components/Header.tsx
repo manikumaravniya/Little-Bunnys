@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "@/assets/logo.png";
+import { getCartCount } from "@/lib/cart";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(getCartCount());
 
   const handleToggle = () => setIsOpen((prev) => !prev);
   const handleClose = () => setIsOpen(false);
+
+  useEffect(() => {
+    const handleCartChange = () => setCartCount(getCartCount());
+    window.addEventListener("lb-cart-change", handleCartChange);
+    return () => window.removeEventListener("lb-cart-change", handleCartChange);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
@@ -23,6 +31,16 @@ const Header = () => {
           </a>
           <a href="/about" className="font-medium text-muted-foreground hover:text-primary transition-colors">
             About Us
+          </a>
+          <a href="/cart" className="font-medium text-muted-foreground hover:text-primary transition-colors">
+            <span className="relative inline-flex items-center">
+              Cart
+              {cartCount > 0 && (
+                <span className="ml-2 inline-flex min-w-[1.5rem] items-center justify-center rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">
+                  {cartCount}
+                </span>
+              )}
+            </span>
           </a>
           <a href="/#contact" className="font-medium text-muted-foreground hover:text-primary transition-colors">
             Contact
@@ -61,6 +79,20 @@ const Header = () => {
             className="font-medium text-muted-foreground hover:text-primary transition-colors"
           >
             About Us
+          </a>
+          <a
+            href="/cart"
+            onClick={handleClose}
+            className="font-medium text-muted-foreground hover:text-primary transition-colors"
+          >
+            <span className="relative inline-flex items-center">
+              Cart
+              {cartCount > 0 && (
+                <span className="ml-2 inline-flex min-w-[1.5rem] items-center justify-center rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">
+                  {cartCount}
+                </span>
+              )}
+            </span>
           </a>
           <a
             href="/#contact"
