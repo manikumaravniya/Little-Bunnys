@@ -68,7 +68,7 @@ const Hero = () => {
           {/* Text Content */}
           <div className="text-center lg:text-left lg:flex-1 animate-fade-up">
             <span className="inline-block px-4 py-2 rounded-full bg-secondary text-secondary-foreground text-sm font-medium mb-6">
-              ✨ New Collection 2025
+              ✨ New Collection 2026
             </span>
             
             <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight mb-6">
