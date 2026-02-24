@@ -1,73 +1,145 @@
-# Welcome to your Lovable project
+# Little Bloom Store + Admin Dashboard
 
-## Project info
+This project now includes:
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+- React + Tailwind storefront
+- Admin authentication
+- Full product management (Add, Edit, Delete)
+- Cloudinary image upload
+- Node.js/Express REST API with JSON-file persistence
 
-## How can I edit this code?
+## Stack
 
-There are several ways of editing your application.
+- Frontend: Vite + React + TypeScript + Tailwind + shadcn/ui
+- Backend: Express (ESM) + JWT auth + Multer + Cloudinary
+- Storage: `backend/data/products.json`
 
-**Use Lovable**
+## Project Structure
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+```
+kids-style-showcase/
+├── frontend/              # React frontend application
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── AdminLogin.tsx          # Admin login page
+│   │   │   └── AdminDashboard.tsx      # Product management dashboard
+│   │   ├── components/
+│   │   │   ├── admin/ProductFormDialog.tsx  # Add/Edit product form
+│   │   │   ├── RequireAdminAuth.tsx         # Route guard
+│   │   │   └── ...
+│   │   └── lib/
+│   │       ├── api.ts              # Frontend API client
+│   │       └── admin-auth.ts       # Admin token helpers
+│   ├── package.json
+│   └── vite.config.ts
+├── backend/               # Express API server
+│   ├── src/
+│   │   ├── server.js                 # Express server entry
+│   │   ├── routes/
+│   │   │   ├── adminRoutes.js        # /api/admin/login
+│   │   │   └── productRoutes.js      # /api/products CRUD
+│   │   ├── middleware/
+│   │   │   ├── auth.js               # JWT auth middleware
+│   │   │   └── upload.js             # Multer config
+│   │   ├── services/
+│   │   │   └── productStore.js       # JSON read/write logic
+│   │   └── config/
+│   │       ├── cloudinary.js         # Cloudinary upload
+│   │       └── env.js                # Environment variables
+│   ├── data/
+│   │   └── products.json             # Product storage
+│   └── package.json
+├── .env                   # Environment variables (create from .env.example)
+├── .env.example
+└── package.json           # Workspace orchestrator
+```
 
-Changes made via Lovable will be committed automatically to this repo.
+## API Endpoints
 
-**Use your preferred IDE**
+- `POST /api/admin/login`
+- `GET /api/products`
+- `POST /api/products` (admin token required)
+- `PUT /api/products/:id` (admin token required)
+- `DELETE /api/products/:id` (admin token required)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Setup
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Install dependencies for all packages:
 
-Follow these steps:
+```bash
+npm run install:all
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+This will install dependencies in root, frontend/, and backend/ folders.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Alternatively, install manually:
 
-# Step 3: Install the necessary dependencies.
-npm i
+```bash
+# Install root workspace dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Install frontend dependencies
+cd frontend
+npm install
+
+# Install backend dependencies
+cd ../backend
+npm install
+cd ..
+```
+
+2. Create `.env` in project root from `.env.example`:
+
+```bash
+copy .env.example .env
+```
+
+3. Fill in your values in `.env`:
+
+- `ADMIN_USERNAME` and `ADMIN_PASSWORD` for admin login
+- `JWT_SECRET` for token signing
+- `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`
+- Optional: `CLOUDINARY_FOLDER`
+
+4. Run frontend + backend together:
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+This starts both servers concurrently:
+- Frontend: `http://localhost:8080`  
+- Backend: `http://localhost:5000`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Or run them separately:
 
-**Use GitHub Codespaces**
+```bash
+# Terminal 1 - Backend
+npm run dev:backend
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Terminal 2 - Frontend
+npm run dev:frontend
+```
 
-## What technologies are used for this project?
+## Admin Access
 
-This project is built with:
+- Login URL: `http://localhost:8080/admin/login`
+- After login, you are redirected to `/admin/dashboard`
+- If credentials are wrong, an error message is shown
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## How to set your own admin username/password
 
-## How can I deploy this project?
+Update these values in `.env`:
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+```env
+ADMIN_USERNAME=your_username
+ADMIN_PASSWORD=your_password
+```
 
-## Can I connect a custom domain to my Lovable project?
+Restart backend server after changing env variables.
 
-Yes, you can!
+## Notes
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- New products require image upload.
+- Editing allows keeping old image or uploading a new one.
+- Delete action prompts for confirmation.

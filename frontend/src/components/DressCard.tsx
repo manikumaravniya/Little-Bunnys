@@ -3,15 +3,14 @@ import { Button } from "@/components/ui/button";
 import { addToCart, getCartItems, removeFromCart, updateCartQuantity } from "@/lib/cart";
 
 interface DressCardProps {
-  image: string;
+  imageUrl: string;
   code: string;
-  name: string;
+  title: string;
   description: string;
-  category: string;
-  price: string;
+  price: number;
 }
 
-const DressCard = ({ image, code, name, description, category, price }: DressCardProps) => {
+const DressCard = ({ imageUrl, code, title, description, price }: DressCardProps) => {
   const [quantity, setQuantity] = useState(0);
 
   const syncQuantity = () => {
@@ -27,7 +26,7 @@ const DressCard = ({ image, code, name, description, category, price }: DressCar
   }, [code]);
 
   const handleAdd = () => {
-    addToCart({ code, name, image });
+    addToCart({ code, name: title, image: imageUrl });
   };
 
   const handleRemove = () => {
@@ -43,13 +42,13 @@ const DressCard = ({ image, code, name, description, category, price }: DressCar
     <div className="group bg-card rounded-2xl overflow-hidden shadow-card card-hover">
       <div className="relative aspect-[4/5] overflow-hidden bg-muted">
         <img 
-          src={image} 
-          alt={name}
+          src={imageUrl} 
+          alt={title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute top-4 left-4">
           <span className="inline-block px-3 py-1 rounded-full bg-secondary/90 backdrop-blur-sm text-secondary-foreground text-xs font-semibold">
-            {category}
+            In Stock
           </span>
         </div>
         <div className="absolute top-4 right-4">
@@ -62,10 +61,10 @@ const DressCard = ({ image, code, name, description, category, price }: DressCar
       <div className="p-5">
         <div className="flex items-start justify-between gap-3 mb-2">
           <h3 className="font-display text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
-            {name}
+            {title}
           </h3>
           <span className="text-sm font-semibold text-primary whitespace-nowrap">
-            {price}
+            ₹{price.toFixed(2)}
           </span>
         </div>
         <p className="text-muted-foreground text-sm leading-relaxed">
