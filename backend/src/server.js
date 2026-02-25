@@ -5,12 +5,14 @@ import adminRoutes from "./routes/adminRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 
 const app = express();
-
-app.use(
-  cors({
-    origin: process.env.CLIENT_ORIGIN || "http://localhost:8080",
-  })
-);
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://little-bunnys.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 app.use(express.json());
 
 app.get("/api/health", (_req, res) => {
