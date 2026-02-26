@@ -1,8 +1,10 @@
 import { getAdminToken } from "@/lib/admin-auth";
 import type { Product, ProductInput } from "@/types/product";
-import axios from "axios";
 
-const API_BASE = `${import.meta.env.VITE_API_URL}/api`;
+const configuredApiUrl = (import.meta.env.VITE_API_URL || "").trim().replace(/\/$/, "");
+const API_BASE = import.meta.env.DEV || !configuredApiUrl
+  ? "/api"
+  : `${configuredApiUrl}/api`;
 const BACKEND_HINT = "Backend API is not reachable. Start both apps with `npm run dev` (or `npm run dev:full`).";
 
 const parseError = async (response: Response) => {
@@ -117,9 +119,3 @@ export const deleteProduct = async (productId: string) => {
     throw new Error(await parseError(response));
   }
 };
-const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true,
-});
-
-export default API;
