@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { env } from "./config/env.js";
+import { testDbConnection } from "./config/db.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 
@@ -34,6 +35,14 @@ app.use((error, _req, res, _next) => {
   return res.status(500).json({ message: "Server error." });
 });
 
-app.listen(env.port, () => {
-  console.log(`Admin API running on http://localhost:${env.port}`);
+const startServer = async () => {
+  await testDbConnection();
+  app.listen(env.port, () => {
+    console.log(`Admin API running on http://localhost:${env.port}`);
+  });
+};
+
+startServer().catch((error) => {
+  console.error("Failed to start server:", error.message);
+  process.exit(1);
 });

@@ -15,6 +15,14 @@ export const env = {
   cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME || "dlbjaesa9",
   cloudinaryApiKey: process.env.CLOUDINARY_API_KEY || "717724687223266",
   cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET || "Gek1tAPVIOkwpyqqzVCKwRkGBxM",
+  postgresHost: process.env.POSTGRES_HOST || "localhost",
+  postgresPort: Number(process.env.POSTGRES_PORT || 5432),
+  postgresUser: process.env.POSTGRES_USER || "postgres",
+  postgresPassword: process.env.POSTGRES_PASSWORD || "mani7200",
+  postgresDatabase:
+    process.env.POSTGRES_DB || process.env.POSTGRES_DATABASE || "littlebloomdb",
+  postgresConnectionString: process.env.POSTGRES_URL || process.env.DATABASE_URL || "",
+  postgresSsl: String(process.env.POSTGRES_SSL || "false").toLowerCase() === "true",
 };
 
 export const isCloudinaryConfigured =
