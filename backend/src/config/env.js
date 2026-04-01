@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 dotenv.config({ path: path.resolve(__dirname, "../../../.env") });
 
 export const env = {
@@ -18,7 +19,7 @@ export const env = {
   postgresHost: process.env.POSTGRES_HOST || "localhost",
   postgresPort: Number(process.env.POSTGRES_PORT || 5432),
   postgresUser: process.env.POSTGRES_USER || "postgres",
-  postgresPassword: process.env.POSTGRES_PASSWORD || "mani7200",
+  postgresPassword: process.env.POSTGRES_PASSWORD || "",
   postgresDatabase:
     process.env.POSTGRES_DB || process.env.POSTGRES_DATABASE || "littlebloomdb",
   postgresConnectionString: process.env.POSTGRES_URL || process.env.DATABASE_URL || "",
