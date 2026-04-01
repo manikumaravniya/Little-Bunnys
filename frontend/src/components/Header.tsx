@@ -67,6 +67,13 @@ const Header = () => {
       >
         <nav className="flex flex-col gap-4 px-4 py-5">
           <a
+            href="/admin/login"
+            onClick={handleClose}
+            className="font-medium text-muted-foreground hover:text-primary transition-colors"
+          >
+            Admin Login
+          </a>
+          <a
             href="/#collection"
             onClick={handleClose}
             className="font-medium text-muted-foreground hover:text-primary transition-colors"
