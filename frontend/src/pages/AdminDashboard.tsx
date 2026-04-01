@@ -80,16 +80,16 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background px-4 py-10">
-      <div className="mx-auto max-w-6xl space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className="min-h-screen bg-background px-3 py-6 sm:px-4 sm:py-10">
+      <div className="mx-auto max-w-6xl space-y-5 sm:space-y-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+            <h1 className="text-2xl font-bold sm:text-3xl">Admin Dashboard</h1>
             <p className="text-sm text-muted-foreground">Manage all products from one place.</p>
           </div>
-          <div className="flex gap-2">
-            <Button onClick={() => { setActionError(""); setIsAddOpen(true); }}>Add New Product</Button>
-            <Button variant="outline" onClick={handleLogout}>Logout</Button>
+          <div className="grid grid-cols-2 gap-2 sm:flex sm:gap-2">
+            <Button className="w-full sm:w-auto" onClick={() => { setActionError(""); setIsAddOpen(true); }}>Add New Product</Button>
+            <Button className="w-full sm:w-auto" variant="outline" onClick={handleLogout}>Logout</Button>
           </div>
         </div>
 
@@ -107,22 +107,23 @@ const AdminDashboard = () => {
               <Card key={product.id} className="border-border/60">
                 <CardContent className="pt-6">
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                    <div className="flex gap-4">
+                    <div className="flex min-w-0 gap-3 sm:gap-4">
                       <img
                         src={product.imageUrl}
                         alt={product.title}
-                        className="h-24 w-24 rounded-md object-cover"
+                        className="h-20 w-20 flex-shrink-0 rounded-md object-cover sm:h-24 sm:w-24"
                       />
-                      <div className="space-y-1">
-                        <h2 className="text-lg font-semibold">{product.title}</h2>
-                        <p className="text-sm text-muted-foreground">{product.description}</p>
+                      <div className="min-w-0 space-y-1">
+                        <h2 className="line-clamp-2 break-words text-base font-semibold sm:text-lg">{product.title}</h2>
+                        <p className="line-clamp-3 break-words text-sm text-muted-foreground">{product.description}</p>
                         <p className="text-sm font-medium">₹{product.price.toFixed(2)}</p>
                         <p className="text-xs text-muted-foreground">Code: {product.code}</p>
                       </div>
                     </div>
 
-                    <div className="flex gap-2">
+                    <div className="grid grid-cols-2 gap-2 sm:flex sm:gap-2 md:self-start">
                       <Button
+                        className="w-full sm:w-auto"
                         variant="outline"
                         onClick={() => {
                           setActionError("");
@@ -132,6 +133,7 @@ const AdminDashboard = () => {
                         Edit
                       </Button>
                       <Button
+                        className="w-full sm:w-auto"
                         variant="destructive"
                         onClick={() => void handleDelete(product.id)}
                         disabled={deleteMutation.isPending}
