@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { optimizeCloudinaryImageUrl } from "@/lib/cloudinary";
 
 const dressOptions = [
   {
@@ -70,7 +71,15 @@ const dressOptions = [
       "Soft pink cotton dress with cute bunny prints, wrap-style bodice, and tassel tie-up detail.",
     image: "https://res.cloudinary.com/dlbjaesa9/image/upload/v1770624358/dress-8_yic4ql.png",
   },
-];
+].map((option) => ({
+  ...option,
+  image: optimizeCloudinaryImageUrl(option.image, {
+    width: 160,
+    height: 160,
+    crop: "fill",
+    gravity: "auto",
+  }),
+}));
 
 type OrderWhatsAppDialogProps = {
   triggerLabel?: string;
@@ -291,6 +300,8 @@ const OrderWhatsAppDialog = ({
                                 <img
                                   src={option.image}
                                   alt={option.name}
+                                  loading="lazy"
+                                  decoding="async"
                                   className="h-full w-full object-cover"
                                 />
                               </div>
@@ -313,6 +324,8 @@ const OrderWhatsAppDialog = ({
                           <img
                             src={preview.image}
                             alt={preview.name}
+                            loading="lazy"
+                            decoding="async"
                             className="h-full w-full object-cover"
                           />
                         </div>

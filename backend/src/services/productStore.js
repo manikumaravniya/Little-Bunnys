@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { query } from "../config/db.js";
+import { env } from "../config/env.js";
 
 const mapRowToProduct = (row) => ({
   id: row.id,
@@ -10,9 +11,48 @@ const mapRowToProduct = (row) => ({
   imageUrl: row.image_url,
 });
 
+const PRODUCTS_CACHE_TTL_MS = Math.max(0, env.productCacheTtlMs || 0);
+
+let cachedProducts = null;
+let cachedProductsAt = 0;
+
+const getFreshCachedProducts = () => {
+  if (!cachedProducts) {
+    return null;
+  }
+
+  if (PRODUCTS_CACHE_TTL_MS === 0) {
+    return null;
+  }
+
+  if (Date.now() - cachedProductsAt > PRODUCTS_CACHE_TTL_MS) {
+    return null;
+  }
+
+  return cachedProducts;
+};
+
+const setProductsCache = (products) => {
+  cachedProducts = products;
+  cachedProductsAt = Date.now();
+};
+
+export const invalidateProductsCache = () => {
+  cachedProducts = null;
+  cachedProductsAt = 0;
+};
+
 export const getProducts = async () => {
+  const cached = getFreshCachedProducts();
+  if (cached) {
+    return cached;
+  }
+
   const result = await query("SELECT * FROM dresses ORDER BY title ASC");
-  return result.rows.map(mapRowToProduct);
+  const products = result.rows.map(mapRowToProduct);
+  setProductsCache(products);
+
+  return products;
 };
 
 export const createProduct = async (productInput) => {
@@ -49,6 +89,8 @@ export const createProduct = async (productInput) => {
     ]
   );
 
+  invalidateProductsCache();
+
   return mapRowToProduct(result.rows[0]);
 };
 
@@ -71,10 +113,17 @@ export const updateProduct = async (id, productInput) => {
     return null;
   }
 
+  invalidateProductsCache();
+
   return mapRowToProduct(result.rows[0]);
 };
 
 export const deleteProduct = async (id) => {
   const result = await query("DELETE FROM dresses WHERE id = $1", [id]);
+
+  if (result.rowCount > 0) {
+    invalidateProductsCache();
+  }
+
   return result.rowCount > 0;
 };

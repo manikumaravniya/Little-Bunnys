@@ -13,6 +13,7 @@ export const env = {
   jwtSecret: process.env.JWT_SECRET || "change-this-jwt-secret",
   adminUsername: process.env.ADMIN_USERNAME || "admin",
   adminPassword: process.env.ADMIN_PASSWORD || "admin123",
+  productCacheTtlMs: Number(process.env.PRODUCT_CACHE_TTL_MS || 60000),
   cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME || "dlbjaesa9",
   cloudinaryApiKey: process.env.CLOUDINARY_API_KEY || "717724687223266",
   cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET || "Gek1tAPVIOkwpyqqzVCKwRkGBxM",
