@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { addToCart, getCartItems, removeFromCart, updateCartQuantity } from "@/lib/cart";
+import { optimizeCloudinaryImageUrl } from "@/lib/cloudinary";
 
 interface DressCardProps {
   imageUrl: string;
@@ -12,6 +13,12 @@ interface DressCardProps {
 
 const DressCard = ({ imageUrl, code, title, description, price }: DressCardProps) => {
   const [quantity, setQuantity] = useState(0);
+  const optimizedImageUrl = optimizeCloudinaryImageUrl(imageUrl, {
+    width: 800,
+    height: 1000,
+    crop: "fill",
+    gravity: "auto",
+  });
 
   const syncQuantity = () => {
     const item = getCartItems().find((entry) => entry.code === code);
@@ -42,8 +49,10 @@ const DressCard = ({ imageUrl, code, title, description, price }: DressCardProps
     <div className="group bg-card rounded-2xl overflow-hidden shadow-card card-hover">
       <div className="relative aspect-[4/5] overflow-hidden bg-muted">
         <img 
-          src={imageUrl} 
+          src={optimizedImageUrl} 
           alt={title}
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute top-4 left-4">

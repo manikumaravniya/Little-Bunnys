@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import OrderWhatsAppDialog from "@/components/OrderWhatsAppDialog";
 import { CartItem, getCartItems, removeFromCart, updateCartQuantity } from "@/lib/cart";
+import { optimizeCloudinaryImageUrl } from "@/lib/cloudinary";
 
 const CartPage = () => {
   const [items, setItems] = useState<CartItem[]>([]);
@@ -55,7 +56,18 @@ const CartPage = () => {
               >
                 <div className="flex items-center gap-4">
                   <div className="h-16 w-16 overflow-hidden rounded-lg bg-muted">
-                    <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+                    <img
+                      src={optimizeCloudinaryImageUrl(item.image, {
+                        width: 160,
+                        height: 160,
+                        crop: "fill",
+                        gravity: "auto",
+                      })}
+                      alt={item.name}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-full w-full object-cover"
+                    />
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">{item.name}</p>

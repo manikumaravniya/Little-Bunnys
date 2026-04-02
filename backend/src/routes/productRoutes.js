@@ -33,6 +33,7 @@ const validateCommon = ({ title, description, price }) => {
 };
 
 router.get("/", async (_req, res) => {
+  res.set("Cache-Control", "no-store");
   const products = await getProducts();
   return res.json(products);
 });

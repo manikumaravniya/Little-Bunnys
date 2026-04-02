@@ -10,6 +10,7 @@ import {
   getProducts,
   updateProduct as updateProductRequest,
 } from "@/lib/api";
+import { optimizeCloudinaryImageUrl } from "@/lib/cloudinary";
 import { clearAdminToken } from "@/lib/admin-auth";
 import type { Product } from "@/types/product";
 import type { ProductInput } from "@/types/product";
@@ -106,11 +107,22 @@ const AdminDashboard = () => {
             {sortedProducts.map((product) => (
               <Card key={product.id} className="border-border/60">
                 <CardContent className="pt-6">
+                  {(() => {
+                    const optimizedImageUrl = optimizeCloudinaryImageUrl(product.imageUrl, {
+                      width: 256,
+                      height: 256,
+                      crop: "fill",
+                      gravity: "auto",
+                    });
+
+                    return (
                   <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                     <div className="flex min-w-0 gap-3 sm:gap-4">
                       <img
-                        src={product.imageUrl}
+                        src={optimizedImageUrl}
                         alt={product.title}
+                        loading="lazy"
+                        decoding="async"
                         className="h-20 w-20 flex-shrink-0 rounded-md object-cover sm:h-24 sm:w-24"
                       />
                       <div className="min-w-0 space-y-1">
@@ -142,6 +154,8 @@ const AdminDashboard = () => {
                       </Button>
                     </div>
                   </div>
+                    );
+                  })()}
                 </CardContent>
               </Card>
             ))}
