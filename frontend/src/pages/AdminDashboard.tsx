@@ -12,6 +12,7 @@ import {
 } from "@/lib/api";
 import { optimizeCloudinaryImageUrl } from "@/lib/cloudinary";
 import { clearAdminToken } from "@/lib/admin-auth";
+import { getStockStatusLabel, normalizeStockStatus } from "@/lib/stock-status";
 import type { Product } from "@/types/product";
 import type { ProductInput } from "@/types/product";
 
@@ -129,6 +130,15 @@ const AdminDashboard = () => {
                         <h2 className="line-clamp-2 break-words text-base font-semibold sm:text-lg">{product.title}</h2>
                         <p className="line-clamp-3 break-words text-sm text-muted-foreground">{product.description}</p>
                         <p className="text-sm font-medium">₹{product.price.toFixed(2)}</p>
+                        <div className="flex items-center gap-2"> 
+                          <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold ${
+                            normalizeStockStatus(product.stockStatus) === "in_stock"
+                              ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-900/30 dark:text-emerald-200"
+                              : "bg-red-100 text-red-900 dark:bg-red-900/30 dark:text-red-200"
+                          }`}>
+                            {getStockStatusLabel(product.stockStatus)}
+                          </span>
+                        </div>
                         <p className="text-xs text-muted-foreground">Code: {product.code}</p>
                       </div>
                     </div>

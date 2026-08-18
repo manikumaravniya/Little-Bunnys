@@ -64,6 +64,7 @@ export const createProduct = async (input: ProductInput) => {
   formData.append("title", input.title);
   formData.append("description", input.description);
   formData.append("price", String(input.price));
+  formData.append("stockStatus", input.stockStatus || "in_stock");
 
   if (!input.image) {
     throw new Error("Product image is required.");
@@ -89,6 +90,7 @@ export const updateProduct = async (productId: string, input: ProductInput) => {
   formData.append("title", input.title);
   formData.append("description", input.description);
   formData.append("price", String(input.price));
+  formData.append("stockStatus", input.stockStatus || "in_stock");
   if (input.imageUrl) {
     formData.append("imageUrl", input.imageUrl);
   }

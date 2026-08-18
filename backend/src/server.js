@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { env } from "./config/env.js";
-import { testDbConnection } from "./config/db.js";
+import { ensureDressStockColumn, testDbConnection } from "./config/db.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 
@@ -37,6 +37,7 @@ app.use((error, _req, res, _next) => {
 
 const startServer = async () => {
   await testDbConnection();
+  await ensureDressStockColumn();
   app.listen(env.port, () => {
     console.log(`Admin API running on http://localhost:${env.port}`);
   });

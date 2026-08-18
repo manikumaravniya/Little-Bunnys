@@ -11,6 +11,16 @@ import {
 
 const router = Router();
 
+const normalizeStockStatus = (value) => {
+  const normalized = String(value ?? "").trim().toLowerCase();
+
+  if (["out of stock", "out_of_stock", "outofstock", "sold out", "unavailable", "not available", "out-of-stock"].includes(normalized)) {
+    return "out_of_stock";
+  }
+
+  return "in_stock";
+};
+
 const validateCommon = ({ title, description, price }) => {
   if (!title?.trim()) {
     return "Title is required.";
@@ -40,7 +50,7 @@ router.get("/", async (_req, res) => {
 
 router.post("/", authMiddleware, upload.single("image"), async (req, res) => {
   try {
-    const { title, description, price } = req.body;
+    const { title, description, price, stockStatus } = req.body;
     const validationError = validateCommon({ title, description, price });
     if (validationError) {
       return res.status(400).json({ message: validationError });
@@ -57,6 +67,7 @@ router.post("/", authMiddleware, upload.single("image"), async (req, res) => {
       description: description.trim(),
       price: Number(price),
       imageUrl,
+      stockStatus: normalizeStockStatus(stockStatus),
     });
 
     return res.status(201).json(created);
@@ -67,7 +78,7 @@ router.post("/", authMiddleware, upload.single("image"), async (req, res) => {
 
 router.put("/:id", authMiddleware, upload.single("image"), async (req, res) => {
   try {
-    const { title, description, price } = req.body;
+    const { title, description, price, stockStatus } = req.body;
     const validationError = validateCommon({ title, description, price });
     if (validationError) {
       return res.status(400).json({ message: validationError });
@@ -87,6 +98,7 @@ router.put("/:id", authMiddleware, upload.single("image"), async (req, res) => {
       description: description.trim(),
       price: Number(price),
       imageUrl: nextImageUrl,
+      stockStatus: normalizeStockStatus(stockStatus),
     });
 
     if (!updated) {

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { normalizeStockStatus, type StockStatus } from "@/lib/stock-status";
 import {
   Dialog,
   DialogContent,
@@ -22,6 +23,7 @@ type ProductFormDialogProps = {
     title: string;
     description: string;
     price: number;
+    stockStatus: StockStatus;
     image: File | null;
     imageUrl?: string;
   }) => Promise<void>;
@@ -39,6 +41,7 @@ const ProductFormDialog = ({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [stockStatus, setStockStatus] = useState<StockStatus>("in_stock");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [error, setError] = useState("");
 
@@ -51,6 +54,7 @@ const ProductFormDialog = ({
     setTitle(product?.title || "");
     setDescription(product?.description || "");
     setPrice(product ? String(product.price) : "");
+    setStockStatus(normalizeStockStatus(product?.stockStatus));
     setImageFile(null);
     setError("");
   }, [open, product]);
@@ -79,6 +83,7 @@ const ProductFormDialog = ({
       title: title.trim(),
       description: description.trim(),
       price: parsedPrice,
+      stockStatus,
       image: imageFile,
       imageUrl: product?.imageUrl,
     });
@@ -129,6 +134,19 @@ const ProductFormDialog = ({
               onChange={(event) => setPrice(event.target.value)}
               placeholder="Enter product price"
             />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="product-stock-status">Stock Status</Label>
+            <select
+              id="product-stock-status"
+              value={stockStatus}
+              onChange={(event) => setStockStatus(event.target.value as StockStatus)}
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <option value="in_stock">In Stock</option>
+              <option value="out_of_stock">Out of Stock</option>
+            </select>
           </div>
 
           <div className="space-y-2">

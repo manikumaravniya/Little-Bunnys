@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { addToCart, getCartItems, removeFromCart, updateCartQuantity } from "@/lib/cart";
 import { optimizeCloudinaryImageUrl } from "@/lib/cloudinary";
+import { getStockStatusLabel, normalizeStockStatus, type StockStatus } from "@/lib/stock-status";
 
 interface DressCardProps {
   imageUrl: string;
@@ -9,10 +10,13 @@ interface DressCardProps {
   title: string;
   description: string;
   price: number;
+  stockStatus?: StockStatus | string | null;
 }
 
-const DressCard = ({ imageUrl, code, title, description, price }: DressCardProps) => {
+const DressCard = ({ imageUrl, code, title, description, price, stockStatus }: DressCardProps) => {
   const [quantity, setQuantity] = useState(0);
+  const normalizedStockStatus = normalizeStockStatus(stockStatus);
+  const isInStock = normalizedStockStatus === "in_stock";
   const optimizedImageUrl = optimizeCloudinaryImageUrl(imageUrl, {
     width: 800,
     height: 1000,
@@ -33,6 +37,10 @@ const DressCard = ({ imageUrl, code, title, description, price }: DressCardProps
   }, [code]);
 
   const handleAdd = () => {
+    if (!isInStock) {
+      return;
+    }
+
     addToCart({ code, name: title, image: imageUrl });
   };
 
@@ -56,8 +64,14 @@ const DressCard = ({ imageUrl, code, title, description, price }: DressCardProps
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute top-4 left-4">
-          <span className="inline-block px-3 py-1 rounded-full bg-secondary/90 backdrop-blur-sm text-secondary-foreground text-xs font-semibold">
-            In Stock
+          <span
+            className={`inline-block px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm ${
+              isInStock
+                ? "bg-emerald-100 text-emerald-900 dark:bg-emerald-900/30 dark:text-emerald-200"
+                : "bg-red-100 text-red-900 dark:bg-red-900/30 dark:text-red-200"
+            }`}
+          >
+            {getStockStatusLabel(normalizedStockStatus)}
           </span>
         </div>
         <div className="absolute top-4 right-4">
@@ -85,8 +99,8 @@ const DressCard = ({ imageUrl, code, title, description, price }: DressCardProps
               -
             </Button>
           )}
-          <Button className="flex-1" onClick={handleAdd}>
-            {quantity > 0 ? `Added to cart (${quantity})` : "Add to cart"}
+          <Button className="flex-1" onClick={handleAdd} disabled={!isInStock}>
+            {quantity > 0 ? `Added to cart (${quantity})` : isInStock ? "Add to cart" : "Out of stock"}
           </Button>
         </div>
       </div>

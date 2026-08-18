@@ -2,6 +2,18 @@ import { v4 as uuidv4 } from "uuid";
 import { query } from "../config/db.js";
 import { env } from "../config/env.js";
 
+const normalizeStockStatusValue = (value) => {
+  const normalized = String(value ?? "")
+    .trim()
+    .toLowerCase();
+
+  if (["out of stock", "out_of_stock", "outofstock", "sold out", "unavailable", "not available", "out-of-stock"].includes(normalized)) {
+    return "out_of_stock";
+  }
+
+  return "in_stock";
+};
+
 const mapRowToProduct = (row) => ({
   id: row.id,
   code: row.code,
@@ -9,6 +21,7 @@ const mapRowToProduct = (row) => ({
   description: row.description,
   price: Number(row.price),
   imageUrl: row.image_url,
+  stockStatus: normalizeStockStatusValue(row.stock_status),
 });
 
 const PRODUCTS_CACHE_TTL_MS = Math.max(0, env.productCacheTtlMs || 0);
@@ -65,7 +78,7 @@ export const createProduct = async (productInput) => {
   );
 
   const nextNumber = Number(nextCodeResult.rows[0]?.next_number || 1);
-  const nextCode = `LB-${String(nextNumber).padStart(3, "0")}`;
+  const nextCode = `DC-${String(nextNumber).padStart(3, "0")}`;
 
   const product = {
     id: uuidv4(),
@@ -75,8 +88,8 @@ export const createProduct = async (productInput) => {
 
   const result = await query(
     `
-      INSERT INTO dresses (id, code, title, description, price, image_url)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO dresses (id, code, title, description, price, image_url, stock_status)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *
     `,
     [
@@ -86,6 +99,7 @@ export const createProduct = async (productInput) => {
       product.description,
       product.price,
       product.imageUrl,
+      normalizeStockStatusValue(product.stockStatus),
     ]
   );
 
@@ -99,14 +113,22 @@ export const updateProduct = async (id, productInput) => {
     `
       UPDATE dresses
       SET
-        title = $2,
-        description = $3,
-        price = $4,
-        image_url = $5
-      WHERE id = $1
+        title = $1,
+        description = $2,
+        price = $3,
+        image_url = $4,
+        stock_status = $5
+      WHERE id = $6
       RETURNING *
     `,
-    [id, productInput.title, productInput.description, productInput.price, productInput.imageUrl]
+    [
+      productInput.title,
+      productInput.description,
+      productInput.price,
+      productInput.imageUrl,
+      normalizeStockStatusValue(productInput.stockStatus),
+      id,
+    ]
   );
 
   if (!result.rows.length) {
