@@ -35,6 +35,7 @@ const Hero = () => {
   ];
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(true);
+  const visibleSlideIndex = activeIndex % slides.length;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -57,34 +58,34 @@ const Hero = () => {
   }, [activeIndex, slides.length]);
 
   return (
-    <section className="relative overflow-hidden pt-6 pb-16 md:pt-10 md:pb-28">
+    <section className="relative overflow-hidden pb-16 pt-8 md:pb-24 md:pt-10">
       {/* Background decorations */}
       <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-coral-light/40 blur-3xl" />
       <div className="absolute bottom-20 right-10 w-40 h-40 rounded-full bg-mint-light/50 blur-3xl" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-lavender-light/30 blur-3xl" />
       
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+      <div className="container relative z-10 mx-auto px-4">
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(360px,540px)] lg:gap-16 xl:gap-20">
           {/* Text Content */}
-          <div className="text-center lg:text-left lg:flex-1 animate-fade-up">
-            <span className="inline-block px-4 py-2 rounded-full bg-secondary text-secondary-foreground text-sm font-medium mb-6">
+          <div className="animate-fade-up text-center lg:text-left">
+            <span className="mb-6 inline-flex items-center rounded-full bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground">
               ✨ New Collection 2026
             </span>
             
-            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight mb-6">
+            <h1 className="mb-6 font-display text-4xl font-bold leading-[1.05] text-foreground sm:text-5xl lg:text-6xl xl:text-7xl">
               Adorable Dresses for{" "}
               <span className="text-primary">Little Stars</span>
             </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 mb-10">
+            <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl lg:mx-0">
               Discover our handpicked collection of beautiful dresses designed with love 
               for your little ones. Comfort meets style in every stitch.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
               <a 
                 href="#collection" 
-                className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-primary text-primary-foreground font-semibold shadow-hover hover:shadow-lg transition-all duration-300 btn-bounce"
+                className="btn-bounce inline-flex h-14 w-full items-center justify-center rounded-full bg-primary px-8 text-base font-semibold text-primary-foreground shadow-hover transition-all duration-300 hover:shadow-lg sm:w-auto"
               >
                 Explore Collection
                 <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -94,7 +95,7 @@ const Hero = () => {
               <OrderWhatsAppDialog
                 triggerLabel="Order via WhatsApp"
                 triggerVariant="secondary"
-                triggerClassName="rounded-full px-8 py-4 font-semibold shadow-hover hover:shadow-lg transition-all duration-300 btn-bounce"
+                triggerClassName="btn-bounce h-14 w-full rounded-full px-8 text-base font-semibold shadow-hover transition-all duration-300 hover:shadow-lg sm:w-auto"
               />
               {/* <a 
                 href="#about" 
@@ -106,20 +107,20 @@ const Hero = () => {
           </div>
           
           {/* Hero Image */}
-          <div className="lg:flex-1 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-            <div className="relative">
+          <div className="animate-fade-up" style={{ animationDelay: "0.2s" }}>
+            <div className="relative mx-auto w-full max-w-[540px]">
               {/* Decorative frame */}
               <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 rounded-3xl blur-2xl" />
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border-4 border-white/50 shadow-2xl">
                 <div
-                  className={`flex w-full ${isAnimating ? "transition-transform duration-700 ease-in-out" : ""}`}
+                  className={`flex h-full w-full ${isAnimating ? "transition-transform duration-700 ease-in-out" : ""}`}
                   style={{ transform: `translateX(-${activeIndex * 100}%)` }}
                 >
                   {slides.map((slide) => (
-                    <div key={slide.src} className="min-w-full">
+                    <div key={slide.src} className="relative min-w-full">
                       {slide.type === "video" ? (
                         <video
-                          className="w-full h-auto max-w-md mx-auto object-cover"
+                          className="h-full w-full object-cover"
                           src={slide.src}
                           autoPlay
                           muted
@@ -130,15 +131,15 @@ const Hero = () => {
                         <img
                           src={slide.src}
                           alt={slide.alt}
-                          className="w-full h-auto max-w-md mx-auto object-cover"
+                          className="h-full w-full object-cover"
                         />
                       )}
                     </div>
                   ))}
-                  <div className="min-w-full">
+                  <div className="relative min-w-full">
                     {slides[0].type === "video" ? (
                       <video
-                        className="w-full h-auto max-w-md mx-auto object-cover"
+                        className="h-full w-full object-cover"
                         src={slides[0].src}
                         autoPlay
                         muted
@@ -149,11 +150,31 @@ const Hero = () => {
                       <img
                         src={slides[0].src}
                         alt={slides[0].alt}
-                        className="w-full h-auto max-w-md mx-auto object-cover"
+                        className="h-full w-full object-cover"
                       />
                     )}
                   </div>
                 </div>
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/20 to-transparent" />
+              </div>
+
+              <div className="mt-5 flex items-center justify-center gap-2 lg:justify-start">
+                {slides.map((slide, index) => (
+                  <button
+                    key={`${slide.src}-${index}`}
+                    type="button"
+                    aria-label={`Go to slide ${index + 1}`}
+                    onClick={() => {
+                      setIsAnimating(true);
+                      setActiveIndex(index);
+                    }}
+                    className={`h-2.5 rounded-full transition-all ${
+                      visibleSlideIndex === index
+                        ? "w-8 bg-primary"
+                        : "w-2.5 bg-foreground/25 hover:bg-foreground/45"
+                    }`}
+                  />
+                ))}
               </div>
               {/* Floating decorations */}
               <div className="absolute -top-4 -right-4 w-16 h-16 bg-primary/30 rounded-full blur-xl animate-pulse" />

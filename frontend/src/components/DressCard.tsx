@@ -54,7 +54,7 @@ const DressCard = ({ imageUrl, code, title, description, price, stockStatus }: D
   };
 
   return (
-    <div className="group bg-card rounded-2xl overflow-hidden shadow-card card-hover">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card card-hover">
       <div className="relative aspect-[4/5] overflow-hidden bg-muted">
         <img 
           src={optimizedImageUrl} 
@@ -81,30 +81,30 @@ const DressCard = ({ imageUrl, code, title, description, price, stockStatus }: D
         </div>
       </div>
       
-      <div className="p-5">
-        <div className="flex items-start justify-between gap-3 mb-2">
-          <h3 className="font-display text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
+      <div className="flex flex-1 flex-col p-5">
+        <div className="mb-3 flex items-start justify-between gap-3">
+          <h3 className="h-16 overflow-hidden font-display text-xl font-semibold leading-tight text-foreground transition-colors group-hover:text-primary">
             {title}
           </h3>
-          <span className="text-sm font-semibold text-primary whitespace-nowrap">
+          <span className="whitespace-nowrap text-lg font-bold text-primary">
             ₹{price.toFixed(2)}
           </span>
         </div>
-        <p className="text-muted-foreground text-sm leading-relaxed">
+        <p className="h-[4.5rem] overflow-hidden text-sm leading-relaxed text-muted-foreground">
           {description}
         </p>
-        <div className="mt-4 flex items-center gap-2">
+        <div className="mt-auto flex items-center gap-2 pt-5">
           {quantity > 0 && (
-            <Button variant="outline" onClick={handleRemove}>
+            <Button variant="outline" onClick={handleRemove} className="h-11 w-11 shrink-0 px-0">
               -
             </Button>
           )}
-          <Button className="flex-1" onClick={handleAdd} disabled={!isInStock}>
+          <Button className="h-11 flex-1 rounded-xl font-semibold" onClick={handleAdd} disabled={!isInStock}>
             {quantity > 0 ? `Added to cart (${quantity})` : isInStock ? "Add to cart" : "Out of stock"}
           </Button>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
